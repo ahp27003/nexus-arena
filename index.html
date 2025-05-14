@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexus Arena - Find Your Gaming Team</title>
+    <meta name="description" content="Connect with gamers, join teams, and compete in tournaments with Nexus Arena - the ultimate gaming team platform" />
+    <meta name="author" content="Nexus Arena Team" />
+    <meta name="keywords" content="gaming, esports, teams, tournaments, players, valorant, csgo, apex legends, overwatch" />
+    <meta name="theme-color" content="#6366f1" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nexus-arena.pages.dev/" />
+    <meta property="og:title" content="Nexus Arena - Find Your Gaming Team" />
+    <meta property="og:description" content="Connect with gamers, join teams, and compete in tournaments with Nexus Arena - the ultimate gaming team platform" />
+    <meta property="og:image" content="/icons/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://nexus-arena.pages.dev/" />
+    <meta name="twitter:title" content="Nexus Arena - Find Your Gaming Team" />
+    <meta name="twitter:description" content="Connect with gamers, join teams, and compete in tournaments with Nexus Arena" />
+    <meta name="twitter:image" content="/icons/og-image.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Nexus Arena">
+
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

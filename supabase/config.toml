@@ -1,0 +1,10 @@
+
+project_id = "zmzquibcjxfsjzplffyy"
+
+[functions.setup-storage]
+verify_jwt = false
+
+[storage]
+[storage.user_uploads]
+enabled = true
+public = true
