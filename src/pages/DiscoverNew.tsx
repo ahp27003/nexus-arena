@@ -352,10 +352,36 @@ const DiscoverNew = () => {
   };
 
   // Handle player invite
-  const handleInvite = (playerId: string) => {
+  const handleInvite = async (playerId: string) => {
     const player = players.find(p => p.id === playerId);
-    if (player) {
+    if (!user || !player) return;
+
+    try {
+      // Insert notification for the invited user
+      const { error } = await (window as any).supabase
+        ? (window as any).supabase
+          .from('notifications')
+          .insert({
+            user_id: playerId,
+            title: 'Team Invitation',
+            message: `${user.user_metadata?.username || user.email || 'A user'} has invited you to join their team!`,
+            type: 'team',
+            read: false
+          })
+        : await import('@/integrations/supabase/client').then(({ supabase }) =>
+          supabase.from('notifications').insert({
+            user_id: playerId,
+            title: 'Team Invitation',
+            message: `${user.user_metadata?.username || user.email || 'A user'} has invited you to join their team!`,
+            type: 'team',
+            read: false
+          })
+        );
+
+      if (error) throw error;
       toast.success(`Invitation sent to ${player.username}!`);
+    } catch (error: any) {
+      toast.error(`Failed to send invite: ${error.message || error}`);
     }
   };
 
