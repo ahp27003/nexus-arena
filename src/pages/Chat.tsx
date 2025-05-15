@@ -293,9 +293,12 @@ const ChatPage = () => {
         </div>
         
         <div className="flex flex-1 overflow-hidden">
-          {/* Sidebar */}
-          {showSidebar && (
-            <div className="w-72 flex flex-col border-r border-[#374151] bg-[#1a202c]">
+          {/* Sidebar - overlays on mobile */}
+          <div className={`fixed inset-0 z-30 bg-black/60 transition-opacity md:static md:z-0 md:bg-transparent ${showSidebar ? 'block' : 'hidden md:block'}`}
+               onClick={() => setShowSidebar(false)}
+               style={{ pointerEvents: showSidebar ? 'auto' : 'none' }}
+          >
+            <div className="w-72 h-full flex flex-col border-r border-[#374151] bg-[#1a202c] shadow-xl md:shadow-none" onClick={e => e.stopPropagation()}>
               {/* Chat Type Tabs */}
               <div className="p-3">
                 <Tabs defaultValue={chatType} onValueChange={(value) => setChatType(value as ChatType)}>
@@ -312,7 +315,6 @@ const ChatPage = () => {
                   </TabsList>
                 </Tabs>
               </div>
-              
               {/* Chat List */}
               <div className="flex-1 overflow-y-auto custom-scrollbar">
                 {isLoading ? (
@@ -337,13 +339,18 @@ const ChatPage = () => {
                     {chats.filter(c => c.type === chatType).map(chat => (
                       <div
                         key={chat.id}
-                        className={`p-3 cursor-pointer rounded-md hover:bg-[#2d3748] ${selectedChat?.id === chat.id ? 'bg-[#2d3748]' : ''}`}
+                        className={`flex items-center gap-3 p-3 cursor-pointer rounded-md hover:bg-[#2d3748] transition-all ${selectedChat?.id === chat.id ? 'bg-[#2d3748] ring-2 ring-purple-600' : ''}`}
                         onClick={() => handleSelectChat(chat)}
                       >
-                        <div className="font-medium flex items-center gap-2 text-slate-200">
-                          <span>{chat.name}</span>
+                        <Avatar className="h-8 w-8">
+                          <AvatarFallback className="bg-[#3a516b] text-slate-100">
+                            {chat.name ? getInitials(chat.name) : <User className="h-4 w-4" />}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-slate-200 truncate">{chat.name}</div>
                           {chat._count?.participants != null && (
-                            <span className="text-xs text-slate-400">({chat._count.participants})</span>
+                            <span className="text-xs text-slate-400">{chat._count.participants} members</span>
                           )}
                         </div>
                       </div>
@@ -352,8 +359,8 @@ const ChatPage = () => {
                 )}
               </div>
             </div>
-          )}
-          
+          </div>
+
           {/* Messages */}
           <div className="flex flex-col flex-1 overflow-hidden bg-[#111827]">
             <div className="flex-1 overflow-y-auto p-4 custom-scrollbar" id="messages-container">
@@ -375,44 +382,41 @@ const ChatPage = () => {
                     const isCurrentUser = message.user_id === user?.id;
                     const showAvatar = index === 0 || messages[index - 1].user_id !== message.user_id;
                     const showTime = index === messages.length - 1 || messages[index + 1]?.user_id !== message.user_id;
-                    
+                    const groupMargin = index > 0 && messages[index - 1].user_id !== message.user_id ? 'mt-6' : '';
                     return (
                       <div
                         key={message.id}
-                        className={`flex items-start gap-2 ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
+                        className={`flex items-end gap-2 ${isCurrentUser ? 'justify-end' : 'justify-start'} ${groupMargin}`}
                       >
                         {!isCurrentUser && showAvatar && (
-                          <Avatar className="h-8 w-8 mt-1">
+                          <Avatar className="h-8 w-8 mb-2">
                             <AvatarImage src={message.profile?.avatar_url} />
                             <AvatarFallback className="bg-[#2c3e50] text-slate-100">
                               {message.profile?.username ? getInitials(message.profile.username) : <User className="h-4 w-4" />}
                             </AvatarFallback>
                           </Avatar>
                         )}
-                        
-                        <div className="flex flex-col">
+                        <div className="flex flex-col max-w-[75vw]">
                           {showAvatar && !isCurrentUser && (
                             <span className="text-xs font-medium text-slate-400 ml-1 mb-1">
                               {message.profile?.username || 'Unknown User'}
                             </span>
                           )}
-                          
-                          <div className={`px-3 py-2 rounded-lg ${isCurrentUser 
-                            ? 'bg-[#2c3e50] text-slate-100 rounded-tr-none' 
-                            : 'bg-[#1f2937] text-slate-100 rounded-tl-none'}`}
-                          > 
+                          <div className={`px-4 py-2 rounded-2xl shadow ${isCurrentUser 
+                            ? 'bg-gradient-to-br from-purple-700 via-indigo-700 to-purple-900 text-white rounded-tr-md' 
+                            : 'bg-[#232946] text-white rounded-tl-md border border-[#2c3e50]'}`}
+                            style={{wordBreak: 'break-word'}}
+                          >
                             {message.content}
                           </div>
-                          
                           {showTime && (
                             <span className={`text-xs text-slate-500 mt-1 ${isCurrentUser ? 'text-right' : 'text-left'}`}>
                               {formatMessageTime(message.created_at)}
                             </span>
                           )}
                         </div>
-                        
                         {isCurrentUser && showAvatar && (
-                          <Avatar className="h-8 w-8 mt-1">
+                          <Avatar className="h-8 w-8 mb-2">
                             <AvatarImage src={profile?.avatar_url} />
                             <AvatarFallback className="bg-[#3a516b] text-slate-100">
                               {profile?.username ? getInitials(profile.username) : <User className="h-4 w-4" />}
@@ -447,23 +451,23 @@ const ChatPage = () => {
                 </div>
               )}
             </div>
-            
             {selectedChat && (
               <form 
                 onSubmit={sendMessage} 
-                className="p-3 border-t border-[#374151] bg-[#1a202c] flex items-center gap-2"
+                className="p-3 border-t border-[#374151] bg-[#181f2a] flex items-center gap-2 sticky bottom-0 z-10"
+                style={{backdropFilter: 'blur(6px)'}}
               >
                 <Input 
                   value={newMessage} 
                   onChange={e => setNewMessage(e.target.value)} 
                   placeholder="Type a message..." 
-                  className="flex-1 bg-[#1e293b] border-[#374151] text-slate-100 placeholder:text-slate-500 focus-visible:ring-slate-400"
+                  className="flex-1 bg-[#232946] border-[#374151] text-slate-100 placeholder:text-slate-500 focus-visible:ring-slate-400 rounded-full px-4 py-2"
                 />
                 <Button 
                   type="submit" 
                   size="icon" 
                   disabled={!newMessage.trim()} 
-                  className="bg-[#2c3e50] hover:bg-[#3a516b] text-slate-100 h-10 w-10 rounded-full"
+                  className="bg-gradient-to-br from-purple-700 via-indigo-700 to-purple-900 hover:opacity-90 text-white h-10 w-10 rounded-full shadow-lg"
                 >
                   <Send className="h-5 w-5" />
                 </Button>

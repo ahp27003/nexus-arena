@@ -1,6 +1,9 @@
 
+/* stylelint-disable-next-line */
 @tailwind base;
+/* stylelint-disable-next-line */
 @tailwind components;
+/* stylelint-disable-next-line */
 @tailwind utilities;
 
 @layer base {
@@ -38,10 +41,12 @@
 
 @layer base {
   * {
+    /* stylelint-disable-next-line */
     @apply border-border selection:bg-purple-500/10;
   }
   
   body {
+    /* stylelint-disable-next-line */
     @apply bg-background text-foreground antialiased overflow-x-hidden;
     background-image: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
     background-size: 100% 100%;
@@ -51,28 +56,56 @@
   }
 
   html {
+    /* stylelint-disable-next-line */
     @apply scroll-smooth;
   }
 }
 
 @layer utilities {
+  /* Custom dark scrollbar for chat and sidebar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #2d3748 #181f2a;
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    background: #181f2a;
+    border-radius: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #6d28d9 30%, #a21caf 90%);
+    border-radius: 8px;
+    min-height: 24px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #a21caf 10%, #6d28d9 90%);
+  }
+  .custom-scrollbar::-webkit-scrollbar-corner {
+    background: #181f2a;
+  }
+
   .glass-card {
+    /* stylelint-disable-next-line */
     @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-lg;
   }
   
   .neon-border {
+    /* stylelint-disable-next-line */
     @apply border border-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)];
   }
   
   .neon-border-pink {
+    /* stylelint-disable-next-line */
     @apply border border-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.5)];
   }
   
   .neon-border-indigo {
+    /* stylelint-disable-next-line */
     @apply border border-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)];
   }
   
   .text-gradient {
+    /* stylelint-disable-next-line */
     @apply bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-400 bg-clip-text text-transparent;
   }
   

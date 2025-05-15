@@ -92,10 +92,78 @@ const Index = () => {
             </div>
           </div>
         </section>
+        {/* Features Section */}
+        <section className="bg-background py-20 px-4">
+          <div className="container mx-auto max-w-5xl">
+            <h2 className="text-3xl font-bold mb-12 text-center">Features</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white/5 p-6 rounded-xl border border-white/10 flex flex-col items-center text-center">
+                <span className="text-purple-400 text-3xl mb-2">🎮</span>
+                <h3 className="text-xl font-semibold mb-2">Skill-Based Matching</h3>
+                <p className="text-white/70">Find teammates who match your rank and play style for a balanced experience.</p>
+              </div>
+              <div className="bg-white/5 p-6 rounded-xl border border-white/10 flex flex-col items-center text-center">
+                <span className="text-pink-400 text-3xl mb-2">🤝</span>
+                <h3 className="text-xl font-semibold mb-2">Community Driven</h3>
+                <p className="text-white/70">Join a vibrant community of passionate gamers and make lasting connections.</p>
+              </div>
+              <div className="bg-white/5 p-6 rounded-xl border border-white/10 flex flex-col items-center text-center">
+                <span className="text-indigo-400 text-3xl mb-2">🔒</span>
+                <h3 className="text-xl font-semibold mb-2">Safe & Secure</h3>
+                <p className="text-white/70">Your privacy and security are our top priorities. Play with peace of mind.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="bg-gradient-to-r from-purple-900/40 to-indigo-900/40 py-20 px-4">
+          <div className="container mx-auto max-w-4xl">
+            <h2 className="text-3xl font-bold mb-12 text-center">What Our Users Say</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white/10 p-6 rounded-xl border border-white/10 flex flex-col">
+                <p className="text-white/80 italic mb-4">"Nexus Arena helped me find the perfect squad for my ranked games! The matching is spot on."</p>
+                <span className="text-purple-300 font-semibold">- Alex G.</span>
+              </div>
+              <div className="bg-white/10 p-6 rounded-xl border border-white/10 flex flex-col">
+                <p className="text-white/80 italic mb-4">"I love the community vibe here. It feels safe and welcoming for all kinds of gamers."</p>
+                <span className="text-pink-300 font-semibold">- Priya S.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="bg-background/70 py-20 px-4">
+          <div className="container mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-lg font-semibold text-purple-400 mb-2">Is Nexus Arena free to use?</h3>
+                <p className="text-white/70">Yes! Creating an account and finding teammates is completely free.</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-pink-400 mb-2">How do you match players?</h3>
+                <p className="text-white/70">We use a combination of skill level, game preferences, and availability to suggest the best teammates for you.</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-indigo-400 mb-2">Can I report inappropriate behavior?</h3>
+                <p className="text-white/70">Absolutely. Our reporting system ensures a safe and respectful environment for everyone.</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
       
       <footer className="py-8 px-4 border-t border-white/10 text-center text-white/50 relative z-10">
-        <p>&copy; 2025 Nexus Arena. All rights reserved.</p>
+        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
+          <p>&copy; 2025 Nexus Arena. All rights reserved.</p>
+          <div className="flex space-x-4 mt-4 md:mt-0">
+            <a href="mailto:contact@nexusarena.gg" className="hover:text-purple-400 transition">Contact</a>
+            <a href="https://twitter.com/nexusarena" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition">Twitter</a>
+            <a href="https://discord.gg/nexusarena" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400 transition">Discord</a>
+          </div>
+        </div>
       </footer>
     </div>
   );
